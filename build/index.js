@@ -1,7 +1,10 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.hello = hello;
-const world = 'world';
-function hello(who = world) {
-    return `Hello ${who}! `;
-}
+// const world = "world";
+const student = [];
+const newStudent_1 = {
+    name: '',
+    age: 0,
+    email: '',
+    isActive: true,
+};
+console.log(newStudent_1);
