@@ -17,7 +17,12 @@ const student: IStudent[] = []
 const newStudent_1: IStudent = {
     name: '',
     age: 0,
-    email: '',
+    email: '1',
     isActive: true,
 }
-console.log(newStudent_1)
+function GetEmail(studentEmail: string) {
+    return studentEmail
+}
+if (newStudent_1.email) {
+    console.log(GetEmail(newStudent_1.email))
+}
