@@ -75,20 +75,42 @@ class MyApp implements IJuniorStudent {
 
 const data = new MyApp('Đây là name', 18, true, 'đây là level')
 
-class MyApp_1 {
-    Render() {
-        const student: IStudent[] = [
+interface DataAdaptor {
+    getData: () => IStudent[]
+}
+class StudentAdaptor implements DataAdaptor {
+    getData() {
+        const students: IStudent[] = [
             {
-                name: 'A',
+                name: 'Student A',
                 age: 18,
-                email: 'email_1',
+                email: 'email1@gmail.com',
                 isActive: true,
-                pet: { name: 'Pet name' },
+                pet: { name: 'Pet A' },
             },
-            { name: 'B', age: 20, email: 'email_2', isActive: true },
+            {
+                name: 'Student B',
+                age: 20,
+                email: 'email2@gmail.com',
+                isActive: false,
+                pet: undefined,
+            },
         ]
+        return students
+    }
+}
+
+class MyApp_1 {
+    adapter: DataAdaptor
+    constructor(adapter: DataAdaptor) {
+        this.adapter = adapter
+    }
+    Render() {
+        const student: IStudent[] = this.adapter.getData()
         console.table(student)
     }
 }
-const myAppData = new MyApp_1()
+
+const myAdaptor = new StudentAdaptor()
+const myAppData = new MyApp_1(myAdaptor)
 myAppData.Render()
