@@ -28,16 +28,18 @@ const newJuniorStudent: IJuniorStudent = {
     email: 'emailJunior@gmail.com',
     isActive: true,
 }
-
+// Type inference: When the type of newStudent_1 do not define, the system will not require it follow to the student type (the 'foo' prop still can acceptable)
 const student: IStudent[] = []
 
-const newStudent_1: IStudent = {
+const newStudent_1 = {
     name: 'A',
     age: 0,
     email: 'email@gmail.com',
     isActive: true,
+    foo: 123,
 }
 student.push(newStudent_1)
+console.log(student)
 
 function GetEmail(studentEmail: string) {
     return studentEmail
