@@ -3,14 +3,22 @@
 // export function hello(who: string = world) {
 //   return `Hello ${who}! `;
 // }
+//enum
+enum PetType {
+    Dog,
+    Cat,
+    Bird = 'Bird',
+}
 
 //interface
 interface IPet {
     name: string
+    type: PetType
 }
 
 interface IStudent {
     name: string
+    gender?: 'Male' | 'Female' | 'Unknow'
     age: number
     email?: string
     isActive: boolean
@@ -23,6 +31,7 @@ interface IJuniorStudent extends IStudent {
 
 const newJuniorStudent: IJuniorStudent = {
     level: 'Junior 1',
+    gender: 'Unknow',
     name: 'string',
     age: 20,
     email: 'emailJunior@gmail.com',
@@ -53,6 +62,7 @@ function GetPetName(student: IStudent) {
 //Implement interface
 class MyApp implements IJuniorStudent {
     name: string
+    gender: 'Male' | 'Female' | 'Unknow'
     age: number
     email?: string
     isActive: boolean
@@ -60,6 +70,7 @@ class MyApp implements IJuniorStudent {
     pet?: IPet
     constructor(
         name: string,
+        gender: 'Male' | 'Female' | 'Unknow',
         age: number,
         isActive: boolean,
         level: string,
@@ -67,6 +78,7 @@ class MyApp implements IJuniorStudent {
         email?: string
     ) {
         this.name = name
+        this.gender = gender
         this.age = age
         this.email = email
         this.isActive = isActive
@@ -74,8 +86,6 @@ class MyApp implements IJuniorStudent {
         this.pet = pet
     }
 }
-
-const data = new MyApp('Đây là name', 18, true, 'đây là level')
 
 interface DataAdaptor {
     getData: () => IStudent[]
@@ -85,13 +95,15 @@ class StudentAdaptor implements DataAdaptor {
         const students: IStudent[] = [
             {
                 name: 'Student A',
+                gender: 'Female',
                 age: 18,
                 email: 'email1@gmail.com',
                 isActive: true,
-                pet: { name: 'Pet A' },
+                pet: { name: 'Pet A', type: PetType.Bird },
             },
             {
                 name: 'Student B',
+                gender: 'Male',
                 age: 20,
                 email: 'email2@gmail.com',
                 isActive: false,
