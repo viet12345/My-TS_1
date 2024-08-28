@@ -16,10 +16,11 @@ interface IPet {
     type: PetType
 }
 
+type MixedDateType = string | Date | number
 interface IStudent {
     name: string
     gender?: 'Male' | 'Female' | 'Unknow'
-    age: number
+    dateOfBirth: MixedDateType
     email?: string
     isActive: boolean
     pet?: IPet
@@ -33,7 +34,7 @@ const newJuniorStudent: IJuniorStudent = {
     level: 'Junior 1',
     gender: 'Unknow',
     name: 'string',
-    age: 20,
+    dateOfBirth: 20,
     email: 'emailJunior@gmail.com',
     isActive: true,
 }
@@ -42,7 +43,7 @@ const student: IStudent[] = []
 
 const newStudent_1 = {
     name: 'A',
-    age: 0,
+    dateOfBirth: 0,
     email: 'email@gmail.com',
     isActive: true,
     foo: 123,
@@ -60,32 +61,32 @@ function GetPetName(student: IStudent) {
 }
 
 //Implement interface
-class MyApp implements IJuniorStudent {
-    name: string
-    gender: 'Male' | 'Female' | 'Unknow'
-    age: number
-    email?: string
-    isActive: boolean
-    level: string
-    pet?: IPet
-    constructor(
-        name: string,
-        gender: 'Male' | 'Female' | 'Unknow',
-        age: number,
-        isActive: boolean,
-        level: string,
-        pet?: IPet,
-        email?: string
-    ) {
-        this.name = name
-        this.gender = gender
-        this.age = age
-        this.email = email
-        this.isActive = isActive
-        this.level = level
-        this.pet = pet
-    }
-}
+// class MyApp implements IJuniorStudent {
+//     name: string
+//     gender: 'Male' | 'Female' | 'Unknow'
+//     dateOfBirth: number
+//     email?: string
+//     isActive: boolean
+//     level: string
+//     pet?: IPet
+//     constructor(
+//         name: string,
+//         gender: 'Male' | 'Female' | 'Unknow',
+//         dateOfBirth: number,
+//         isActive: boolean,
+//         level: string,
+//         pet?: IPet,
+//         email?: string
+//     ) {
+//         this.name = name
+//         this.gender = gender
+//         this.dateOfBirth = dateOfBirth
+//         this.email = email
+//         this.isActive = isActive
+//         this.level = level
+//         this.pet = pet
+//     }
+// }
 
 interface DataAdaptor {
     getData: () => IStudent[]
@@ -96,7 +97,7 @@ class StudentAdaptor implements DataAdaptor {
             {
                 name: 'Student A',
                 gender: 'Female',
-                age: 18,
+                dateOfBirth: 18,
                 email: 'email1@gmail.com',
                 isActive: true,
                 pet: { name: 'Pet A', type: PetType.Bird },
@@ -104,7 +105,7 @@ class StudentAdaptor implements DataAdaptor {
             {
                 name: 'Student B',
                 gender: 'Male',
-                age: 20,
+                dateOfBirth: '17/12/2000',
                 email: 'email2@gmail.com',
                 isActive: false,
                 pet: undefined,
@@ -122,6 +123,13 @@ class MyApp_1 {
     Render() {
         const student: IStudent[] = this.adapter.getData()
         console.table(student)
+    }
+
+    countAge(dateOfBirth: MixedDateType) {
+        if (typeof dateOfBirth === 'string') {
+            dateOfBirth = new Date(dateOfBirth)
+        }
+        const age = Date
     }
 }
 
