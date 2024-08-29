@@ -49,7 +49,7 @@ const newStudent_1 = {
     foo: 123,
 }
 student.push(newStudent_1)
-console.log(student)
+// console.log(student)
 
 function GetEmail(studentEmail: string) {
     return studentEmail
@@ -105,7 +105,7 @@ class StudentAdaptor implements DataAdaptor {
             {
                 name: 'Student B',
                 gender: 'Male',
-                dateOfBirth: '17/12/2000',
+                dateOfBirth: '2000/12/17',
                 email: 'email2@gmail.com',
                 isActive: false,
                 pet: undefined,
@@ -125,14 +125,60 @@ class MyApp_1 {
         console.table(student)
     }
 
-    countAge(dateOfBirth: MixedDateType) {
-        if (typeof dateOfBirth === 'string') {
-            dateOfBirth = new Date(dateOfBirth)
+    // Define MixedDateType to include string, Date, and number
+
+    countAge(dateOfBirth: MixedDateType): number {
+        if (typeof dateOfBirth === 'number') {
+            // Directly return the number as age if dateOfBirth is a number
+            return dateOfBirth
         }
-        const age = Date
+
+        let birthDate: Date
+
+        // Convert dateOfBirth to Date object if it's a string
+        if (typeof dateOfBirth === 'string') {
+            birthDate = new Date(dateOfBirth)
+        } else if (dateOfBirth instanceof Date) {
+            birthDate = dateOfBirth
+        } else {
+            throw new Error('Invalid dateOfBirth type')
+        }
+
+        // Ensure the dateOfBirth is valid
+        if (isNaN(birthDate.getTime())) {
+            throw new Error('Invalid dateOfBirth')
+        }
+
+        // Calculate age
+        const now = new Date()
+        let age = now.getFullYear() - birthDate.getFullYear()
+        const monthDifference = now.getMonth() - birthDate.getMonth()
+
+        // Adjust age if the birthday has not occurred yet this year
+        if (
+            monthDifference < 0 ||
+            (monthDifference === 0 && now.getDate() < birthDate.getDate())
+        ) {
+            age--
+        }
+
+        return age
     }
 }
 
 const myAdaptor = new StudentAdaptor()
 const myAppData = new MyApp_1(myAdaptor)
-myAppData.Render()
+const students = myAdaptor.getData()
+students.forEach((student) => {
+    try {
+        const age = myAppData.countAge(student.dateOfBirth)
+        console.log(`${student.name} is ${age} years old.`)
+    } catch (error: any) {
+        console.error(
+            `Error calculating age for ${student.name}: ${error.message}`
+        )
+    }
+})
+// console.log(myAppData.countAge('1990-01-01')) // Example with date string
+// console.log(myAppData.countAge(new Date(1990, 12, 4))) // Example with Date object
+// console.log(myAppData.countAge(32)) //Example with Number
