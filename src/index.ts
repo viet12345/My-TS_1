@@ -120,6 +120,26 @@ class MyApp_1 {
     constructor(adapter: DataAdaptor) {
         this.adapter = adapter
     }
+
+    //optional param: param nhận vào là 1 mảng các số | không có
+    CalculateAverageAge(...numbers: number[]): number {
+        // Nếu không có số nào được truyền vào, trả về NaN (hoặc có thể trả về 0 tùy theo yêu cầu)
+        if (numbers.length === 0) {
+            return NaN // Hoặc return 0 nếu bạn muốn xử lý trường hợp không có tham số
+        }
+
+        // Tính tổng các số
+        const totalSum = numbers.reduce(
+            (accumulator, currentValue) => accumulator + currentValue,
+            0
+        )
+
+        // Tính giá trị trung bình
+        const average = totalSum / numbers.length
+
+        return average
+    }
+
     Render() {
         const student: IStudent[] = this.adapter.getData()
         console.table(student)
@@ -169,16 +189,20 @@ class MyApp_1 {
 const myAdaptor = new StudentAdaptor()
 const myAppData = new MyApp_1(myAdaptor)
 const students = myAdaptor.getData()
+let ageArray: number[] = []
 students.forEach((student) => {
     try {
         const age = myAppData.countAge(student.dateOfBirth)
         console.log(`${student.name} is ${age} years old.`)
+        ageArray.push(age)
     } catch (error: any) {
         console.error(
             `Error calculating age for ${student.name}: ${error.message}`
         )
     }
 })
+console.log(myAppData.CalculateAverageAge(...ageArray))
+
 // console.log(myAppData.countAge('1990-01-01')) // Example with date string
-// console.log(myAppData.countAge(new Date(1990, 12, 4))) // Example with Date object
+// console.log(myAppData.countAge(new Date(1990, 1, 1))) // Example with Date object
 // console.log(myAppData.countAge(32)) //Example with Number
