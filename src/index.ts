@@ -25,9 +25,11 @@ const newJuniorStudent: IJuniorStudent = {
     level: 'Junior 1',
     name: 'string',
     age: 20,
-    email: 'emailJunior@gmail.com',
     isActive: true,
+    pet: { name: '$name' } || { name: 'NA' },
 }
+console.log(newJuniorStudent.pet?.name)
+
 // Type inference: When the type of newStudent_1 do not define, the system will not require it follow to the student type (the 'foo' prop still can acceptable)
 const student: IStudent[] = []
 
@@ -47,32 +49,19 @@ function GetEmail(studentEmail: string) {
 
 //Optional Chaining => mục đích là không để giá trị trả ra là unđefined
 function GetPetName(student: IStudent) {
-    return student.pet?.name || ''
+    return student.pet?.name
 }
 
 //Implement interface
 class MyApp implements IJuniorStudent {
-    name: string
-    age: number
-    email?: string
-    isActive: boolean
-    level: string
-    pet?: IPet
     constructor(
-        name: string,
-        age: number,
-        isActive: boolean,
-        level: string,
-        pet?: IPet,
-        email?: string
-    ) {
-        this.name = name
-        this.age = age
-        this.email = email
-        this.isActive = isActive
-        this.level = level
-        this.pet = pet
-    }
+        public name: string,
+        public age: number,
+        public isActive: boolean,
+        public level: string,
+        public pet?: IPet,
+        public email?: string
+    ) {}
 }
 
 const data = new MyApp('Đây là name', 18, true, 'đây là level')
