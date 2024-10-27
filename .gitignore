@@ -130,7 +130,7 @@ dist
 .pnp.*
 
 #report
-.allure-report
-.allure-results
-.cypress/screenshots
-.cypress/downloads
+allure-report/
+allure-results/
+cypress/screenshots/
+cypress/downloads/
