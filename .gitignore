@@ -132,5 +132,5 @@ dist
 #report
 allure-report/
 allure-results/
-cypress/screenshots
-cypress/downloads
+.cypress/screenshots/
+.cypress/downloads/
