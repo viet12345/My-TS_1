@@ -11,5 +11,6 @@ export default defineConfig({
         },
         screenshotOnRunFailure: true,
         baseUrl: 'https://example.cypress.io',
+        chromeWebSecurity: false,
     },
 })
